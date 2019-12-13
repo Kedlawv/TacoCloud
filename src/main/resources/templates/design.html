@@ -11,10 +11,14 @@
 <img th:src="@{/images/senor-taco-logo_drb.jpg}" width="20%" height="20%"/>
 
 <form method="POST" th:object="${design}">
+<!--    object:design is an attribute we have passed in to the model in the controller-->
+<!--    its of the type of Taco-->
     <div>
         <div>
             <h3>Designate your wrap:</h3>
             <div th:each="ingredient : ${wrap}">
+<!--    name of the input is not arbitrary, it corresponds to the name of the variable
+        in the Taco class-->
                 <input name="ingredients" type="checkbox" th:value="${ingredient.getId()}">
                 <span th:text="${ingredient.name}"></span>
             </div>
@@ -50,6 +54,8 @@
     </div>
     <div>
     <h3>Name your taco creation:</h3>
+<!--        *{name} is variable selection expression it refers to previously selected object-->
+<!--        in this case its ${design} if I understand correctly-->
     <input type="text" th:field="*{name}"/>
     <br/>
     <button>Submit your taco</button>
