@@ -2,11 +2,13 @@ package tacos.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tacos.domain.Ingredient;
 import tacos.domain.Ingredient.Type;
 import tacos.domain.Taco;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +19,7 @@ public class DesignTacoController {
     private static final org.slf4j.Logger log =
             org.slf4j.LoggerFactory.getLogger(DesignTacoController.class);
 
+    @GetMapping
     public String showDesignForm(Model model){
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
@@ -34,10 +37,14 @@ public class DesignTacoController {
         Type[] types = Ingredient.Type.values();
         for(Type type : types){
             model.addAttribute(type.toString().toLowerCase(),
-                    filterByType(ingredients,type));
+                    filterByTypeFor(ingredients,type));
         }
 
+        model.addAttribute("wrapLiteral",ingredients.get(0));
+        model.addAttribute(types[0].toString(),ingredients.get(0));
+
         model.addAttribute("design", new Taco());
+
         return "design";
 
 
@@ -48,14 +55,25 @@ public class DesignTacoController {
     // one that is currently iterated over in the for loop
 
     private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
-        return ingredients.stream()
+        List<Ingredient> ing = ingredients.stream()
                 .filter(x -> x.getType().equals(type))
                 .collect(Collectors.toList());
+        System.out.println(ing);
+        return ing;
     }
         //filter() takes an object of type Predicate. Predicate takes an object of class Ingredient.
         //lambda is the implementation of the interface method test() of the Predicate interface.
         // test() returns boolean that filter is consuming and either passing the Ingredient or not based
         // on the value that test has returned.
 
+    private List<Ingredient> filterByTypeFor(List<Ingredient> ingredients, Type type){
+        List<Ingredient> result = new ArrayList<>();
+        for(Ingredient i : ingredients){
+            if(i.getType().equals(type)){
+                result.add(i);
+            }
+        }
+        return result;
+    }
 
 }
