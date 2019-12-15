@@ -20,7 +20,7 @@ public class OrderController {
         return "orderForm";
     }
 
-    @PostMapping("/current")
+    @PostMapping()
     public String processOrder(Order order){
         log.info("Order submitted: " + order);
         return "redirect:/";

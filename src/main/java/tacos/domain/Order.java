@@ -115,4 +115,18 @@ public class Order {
     public int hashCode() {
         return Objects.hash(name, street, city, state, zip, ccNumber, ccExpiration, ccCVV);
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "name='" + name + '\'' +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                ", ccNumber='" + ccNumber + '\'' +
+                ", ccExpiration='" + ccExpiration + '\'' +
+                ", ccCVV='" + ccCVV + '\'' +
+                '}';
+    }
 }
