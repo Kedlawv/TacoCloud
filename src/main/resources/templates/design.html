@@ -13,6 +13,9 @@
 <form method="POST" th:object="${design}">
 <!--    object:design is an attribute we have passed in to the model in the controller-->
 <!--    its of the type of Taco-->
+<!--    because the form tag does not have action attribute that means that the browser will send-->
+<!--    the form data to the same path that the GET request displayed the form but it will use the -->
+<!--    POST method.-->
     <div>
         <div>
             <h3>Designate your wrap:</h3>

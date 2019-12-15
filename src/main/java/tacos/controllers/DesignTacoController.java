@@ -3,6 +3,7 @@ package tacos.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tacos.domain.Ingredient;
 import tacos.domain.Ingredient.Type;
@@ -40,15 +41,17 @@ public class DesignTacoController {
                     filterByTypeFor(ingredients,type));
         }
 
-        model.addAttribute("wrapLiteral",ingredients.get(0));
-        model.addAttribute(types[0].toString(),ingredients.get(0));
-
         model.addAttribute("design", new Taco());
 
         return "design";
+    }
 
+    @PostMapping
+    public String processDesign(Taco design){
+        // Save taco design
+        log.info("Processing design: " + design);
 
-
+        return "redirect:/orders/current";
     }
 
     // only passes the ingredients that are of one of the types declared in the Type enum ?
