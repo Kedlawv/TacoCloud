@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import tacos.domain.Ingredient;
@@ -22,8 +23,8 @@ public class DesignTacoController {
     private static final org.slf4j.Logger log =
             org.slf4j.LoggerFactory.getLogger(DesignTacoController.class);
 
-    @GetMapping
-    public String showDesignForm(Model model){
+    @ModelAttribute
+    public void addIngriedentsToModel(Model model){
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
                 new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
@@ -42,16 +43,24 @@ public class DesignTacoController {
             model.addAttribute(type.toString().toLowerCase(),
                     filterByTypeFor(ingredients,type));
         }
+    }
 
+
+    @GetMapping
+    public String showDesignForm(Model model){
         model.addAttribute("design", new Taco());
-
         return "design";
     }
 
     @PostMapping
-    public String processDesign(@Valid Taco design, Errors errors){
+    public String processDesign(@Valid @ModelAttribute("design") Taco design, Errors errors){
+        //@ModelAttribute fixed the crash after submitting the form with errors
+        // I'm guessing that after an error we do not run the showDesignForm() again we simply go straight
+        // to the "design" view and we no longer have access to the design object ?
+        // and annotating the Taco design with @ModelAttribute pushed the design object back to design view?
+
         // @Valid will validate the form after it was bound but before the processDesign() is called
-        // if there are any validation errors they will captured in the Errors object and passed
+        // if there are any validation errors they will be captured in the Errors object and passed
         // to the method
 
         if(errors.hasErrors()){ // if validation errors - return to the form and show errors

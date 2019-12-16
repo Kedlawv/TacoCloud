@@ -4,6 +4,8 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
 
     <title>Taco Cloud</title>
 </head>
@@ -47,6 +49,9 @@
     <h3>Here's how I'll pay...</h3>
     <label for="ccNumber">Credit Card #: </label>
     <input type="text" th:field="*{ccNumber}" id="ccNumber"/>
+    <span class="validationError"
+          th:if="${#fields.hasErrors('ccNumber')}"
+          th:errors="*{ccNumber}">CC Num Error</span>
     <br/>
 
     <label for="ccExpiration">Expiration: </label>
