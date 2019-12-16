@@ -2,6 +2,7 @@ package tacos.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import tacos.domain.Ingredient;
 import tacos.domain.Ingredient.Type;
 import tacos.domain.Taco;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,7 +49,15 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processDesign(Taco design){
+    public String processDesign(@Valid Taco design, Errors errors){
+        // @Valid will validate the form after it was bound but before the processDesign() is called
+        // if there are any validation errors they will captured in the Errors object and passed
+        // to the method
+
+        if(errors.hasErrors()){ // if validation errors - return to the form and show errors
+            return "design";
+        }
+
         // Save taco design
         log.info("Processing design: " + design);
 
