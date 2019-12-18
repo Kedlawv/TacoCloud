@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class Order {
@@ -23,6 +24,11 @@ public class Order {
         this.ccExpiration = ccExpiration;
         this.ccCVV = ccCVV;
     }
+
+
+    private Long id;
+
+    private Date createdAT;
 
     @NotBlank(message="Name is required")
     private String name;
@@ -104,6 +110,22 @@ public class Order {
 
     public void setCcCVV(String ccCVV) {
         this.ccCVV = ccCVV;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getCreatedAT() {
+        return createdAT;
+    }
+
+    public void setCreatedAT(Date createdAT) {
+        this.createdAT = createdAT;
     }
 
     @Override
