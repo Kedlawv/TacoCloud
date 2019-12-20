@@ -33,18 +33,8 @@ public class DesignTacoController {
         this.designRepo = designRepo;
     }
 
-    @ModelAttribute(name = "order") // ensures that an Order object will be created in the model
-    public Order order() {
-        return new Order();
-    }
-
-    @ModelAttribute(name="taco")
-    public Taco taco() {
-        return new Taco();
-    }
-
-    @GetMapping
-    public String showDesignForm(Model model) {
+    @ModelAttribute
+    public void addIngredientsToModel(Model model){
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepo.findAll().forEach(ingredients::add);
 
@@ -52,7 +42,21 @@ public class DesignTacoController {
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
-        model.addAttribute("design", new Taco());
+    }
+
+    @ModelAttribute(name = "order") // ensures that an Order object will be created in the model
+    public Order order() {
+        return new Order();
+    }
+
+    @ModelAttribute(name = "taco")
+    public Taco taco() {
+        return new Taco();
+    }
+
+    @GetMapping
+    public String showDesignForm(Model model) {
+//        model.addAttribute("design", new Taco());
         return "design";
     }
 
@@ -60,13 +64,14 @@ public class DesignTacoController {
     public String processDesign(@Valid Taco design, Errors errors, @ModelAttribute Order order) {
 
         // @ModelAttribute on order parameter indicates that its value should come from the model
-        // and that Spring MVC should not attemt to bind request parameters to it
+        // and that Spring MVC should not attempt to bind request parameters to it
 
         // @Valid will validate the form after it was bound but before the processDesign() is called
         // if there are any validation errors they will be captured in the Errors object and passed
         // to the method
 
         if (errors.hasErrors()) { // if validation errors - return to the form and show errors
+            System.out.println("#########processDesign hasErrors");
             return "design";
         }
 

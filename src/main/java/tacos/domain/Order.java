@@ -1,10 +1,10 @@
 package tacos.domain;
 
+import org.hibernate.validator.constraints.CreditCardNumber;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.CreditCardNumber;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,9 +15,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(String name, String street, String city, String state, String zip,
+    public Order(String deliveryName, String street, String city, String state, String zip,
                  String ccNumber, String ccExpiration, String ccCVV) {
-        this.name = name;
+        this.deliveryName = deliveryName;
         this.street = street;
         this.city = city;
         this.state = state;
@@ -30,10 +30,10 @@ public class Order {
 
     private Long id;
 
-    private Date createdAT;
+    private Date createdAt;
 
     @NotBlank(message="Name is required")
-    private String name;
+    private String deliveryName;
     @NotBlank(message="Street is required")
     private String street;
     @NotBlank(message="City is required")
@@ -52,12 +52,20 @@ public class Order {
 
     private List<Taco> tacos= new ArrayList<>();
 
-    public String getName() {
-        return name;
+    public String getDeliveryName() {
+        return deliveryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<Taco> getTacos() {
+        return tacos;
+    }
+
+    public void setTacos(List<Taco> tacos) {
+        this.tacos = tacos;
+    }
+
+    public void setDeliveryName(String deliveryName) {
+        this.deliveryName = deliveryName;
     }
 
     public String getStreet() {
@@ -124,12 +132,12 @@ public class Order {
         this.id = id;
     }
 
-    public Date getCreatedAT() {
-        return createdAT;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedAT(Date createdAT) {
-        this.createdAT = createdAT;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public void addDesign(Taco design) {
@@ -141,7 +149,7 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(name, order.name) &&
+        return Objects.equals(deliveryName, order.deliveryName) &&
                 Objects.equals(street, order.street) &&
                 Objects.equals(city, order.city) &&
                 Objects.equals(state, order.state) &&
@@ -153,13 +161,13 @@ public class Order {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, street, city, state, zip, ccNumber, ccExpiration, ccCVV);
+        return Objects.hash(deliveryName, street, city, state, zip, ccNumber, ccExpiration, ccCVV);
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "name='" + name + '\'' +
+                "deliveryName='" + deliveryName + '\'' +
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
