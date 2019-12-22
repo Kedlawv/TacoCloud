@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import tacos.data.IngredientRepository;
-import tacos.data.TacoRepository;
+import tacos.data.JpaIngredientRepository;
+import tacos.data.JpaTacoRepository;
 import tacos.domain.Ingredient;
 import tacos.domain.Ingredient.Type;
 import tacos.domain.Order;
@@ -25,16 +25,16 @@ public class DesignTacoController {
     private static final org.slf4j.Logger log =
             org.slf4j.LoggerFactory.getLogger(DesignTacoController.class);
 
-    private final IngredientRepository ingredientRepo;
-    private TacoRepository designRepo;
+    private final JpaIngredientRepository ingredientRepo;
+    private JpaTacoRepository designRepo;
 
-    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository designRepo) {
+    public DesignTacoController(JpaIngredientRepository ingredientRepo, JpaTacoRepository designRepo) {
         this.ingredientRepo = ingredientRepo;
         this.designRepo = designRepo;
     }
 
     @ModelAttribute
-    public void addIngredientsToModel(Model model){
+    public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepo.findAll().forEach(ingredients::add);
 

@@ -1,13 +1,21 @@
 package tacos.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public class Ingredient {
-    private final String id;
-    private final String name;
-    private final Type type;
-    public static enum Type {
+
+    @Id
+    private  String id;
+    private  String name;
+    private  Type type;
+    public enum Type {
         WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
+    }
+
+    public Ingredient() {
     }
 
     public Ingredient(String id, String name, Type type) {

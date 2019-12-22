@@ -1,21 +1,26 @@
 package tacos.domain;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
 public class Taco {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Date createdAT;
+    private Date createdAt;
 
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
     private String name;
 
+    @ManyToMany(targetEntity = Ingredient.class)
     @NotNull(message = "List of ingredients is null")
     @Size(min=1, message="Please select at least one ingredient")
     private List<Ingredient> ingredients;
@@ -26,6 +31,11 @@ public class Taco {
     public Taco(String name, List<Ingredient> ingredients) {
         this.name = name;
         this.ingredients = ingredients;
+    }
+
+    @PrePersist
+    void createdAt(){
+        this.createdAt = new Date();
     }
 
     public String getName() {
@@ -53,11 +63,11 @@ public class Taco {
     }
 
     public Date getCreatedAT() {
-        return createdAT;
+        return createdAt;
     }
 
-    public void setCreatedAT(Date createdAT) {
-        this.createdAT = createdAT;
+    public void setCreatedAT(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

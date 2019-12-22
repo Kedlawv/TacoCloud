@@ -1,14 +1,13 @@
 package tacos.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import tacos.data.OrderRepository;
+import tacos.data.JpaOrderRepository;
 import tacos.domain.Order;
 
 import javax.validation.Valid;
@@ -21,9 +20,9 @@ public class OrderController {
     private static final org.slf4j.Logger log =
             org.slf4j.LoggerFactory.getLogger(OrderController.class);
 
-    private OrderRepository orderRepo;
+    private JpaOrderRepository orderRepo;
 
-    public OrderController(OrderRepository orderRepo){
+    public OrderController(JpaOrderRepository orderRepo){
         this.orderRepo = orderRepo;
     }
 
