@@ -17,7 +17,7 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
   public IngredientByIdConverter(JpaIngredientRepository ingredientRepo) {
     this.ingredientRepo = ingredientRepo;
   }
-  
+
   @Override
   public Ingredient convert(String id) {
     Optional<Ingredient> optionalIngredient = ingredientRepo.findById(id);
